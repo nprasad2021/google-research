@@ -43,10 +43,10 @@ from six.moves import range
 import tensorflow.compat.v1 as tf
 from tensorflow.compat.v1 import gfile
 
-from mol_dqn.chemgraph.dqn import deep_q_networks
-from mol_dqn.chemgraph.dqn import molecules as molecules_mdp
-from mol_dqn.chemgraph.dqn.py import molecules
-from mol_dqn.chemgraph.dqn.tensorflow_core import core
+from dqn import deep_q_networks
+from dqn import molecules as molecules_mdp
+from dqn.py import molecules
+from dqn.tensorflow_core import core
 
 flags.DEFINE_string('model_dir',
                     '/namespace/gas/primary/zzp/dqn/r=3/exp2_bs_dqn',
@@ -330,7 +330,7 @@ def _step(environment, dqn, memory, episode, hparams, exploration, head):
       for act in valid_actions
   ])
   action = valid_actions[dqn.get_action(
-      observations, head=head, update_epsilon=exploration.value(episode))]
+      observations, head=head, update_epsilon=0.1)]
   action_t_fingerprint = np.append(
       deep_q_networks.get_fingerprint(action, hparams), steps_left)
   result = environment.step(action)
